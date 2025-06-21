@@ -1,0 +1,8 @@
+# Dependencies
+/node_modules
+
+# Logs
+npm-debug.log*
+
+# Operating system files
+.DS_Store
