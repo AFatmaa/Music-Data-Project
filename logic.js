@@ -130,7 +130,7 @@ export function findEveryDaySongs(history) {
   const allListenDays = new Set();
 
   for (const event of history) {
-    const listenDate = new Date(event.timestamp).toISOString().slice(0, 10);
+    const listenDate = event.timestamp.slice(0, 10);
     allListenDays.add(listenDate);
 
     const songIdentifier = `${event.song.artist} - ${event.song.name}`;
