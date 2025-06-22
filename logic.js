@@ -1,4 +1,3 @@
-import { count } from 'console';
 import { getListenEvents, getSong } from './data.mjs';
 
 // ----------------------------------------------------------------
@@ -49,9 +48,11 @@ export async function getEnrichedHistory(userID) {
 // ----------------------------------------------------------------
 
 /**
- * A generic function to find the most common item based on a property.
- * Reusable for finding the most common song, artist, etc.
- * @returns {string | null} The item with the highest count.
+ * A generic, reusable function to find the top item from a list.
+ * @param {object[]} history The enriched listening history.
+ * @param {(item: object) => string} keyExtractor Extracts the key to group by (e.g., song name or artist).
+ * @param {(item: object) => number} [valueExtractor=(() => 1)] Extracts the value to sum. Defaults to 1 for simple counting.
+ * @returns {string | null} The key with the highest total value.
  */
 function findMostCommonBy(history, propertyExtractor, valueExtractor = () => 1) {
   const totals = new Map();
@@ -72,10 +73,10 @@ function findMostCommonBy(history, propertyExtractor, valueExtractor = () => 1) 
 
 // --- Question 1 & 4 (Most Listened Song & Artist) ---
 export function getMostListenedSongByCount(history) {
-  return findMostCommonBy(history, item => item.song.name);
+  return findMostCommonBy(history, item => `${item.song.artist} - ${item.song.name}`);
 }
 export function getMostListenedSongByTime(history) {
-  return findMostCommonBy(history, item => item.song.name, item => item.song.duration);
+  return findMostCommonBy(history, item => `${item.song.artist} - ${item.song.name}`, item => item.song.duration);
 }
 export function getMostListenedArtistByCount(history) {
   return findMostCommonBy(history, item => item.song.artist);
@@ -106,10 +107,11 @@ export function findLongestStreak(history) {
   let currentStreak = { name: '', count: 0 };
 
   for (const event of history) {
-    if (event.song.name === currentStreak.name) {
+    const currentSongIdentifier = `${event.song.artist} - ${event.song.name}`;
+    if (currentSongIdentifier === currentStreak.name) {
       currentStreak.count++;
     } else {
-      currentStreak = { name: event.song.name, count: 1 };
+      currentStreak = { name: currentSongIdentifier, count: 1 };
     }
 
     if (currentStreak.count > longestStreak.count) {
@@ -131,17 +133,17 @@ export function findEveryDaySongs(history) {
     const listenDate = new Date(event.timestamp).toISOString().slice(0, 10);
     allListenDays.add(listenDate);
 
-    const songName = event.song.name;
-    if (!songListenDays.has(songName)) {
-      songListenDays.set(songName, new Set());
+    const songIdentifier = `${event.song.artist} - ${event.song.name}`;
+    if (!songListenDays.has(songIdentifier)) {
+      songListenDays.set(songIdentifier, new Set());
     }
-    songListenDays.get(songName).add(listenDate);
+    songListenDays.get(songIdentifier).add(listenDate);
   }
 
   const everyDaySongs = [];
-  for (const [songName, listenDays] of songListenDays.entries()) {
+  for (const [songIdentifier, listenDays] of songListenDays.entries()) {
     if (listenDays.size === allListenDays.size) {
-      everyDaySongs.push(songName);
+      everyDaySongs.push(songIdentifier);
     }
   }
   return everyDaySongs;
