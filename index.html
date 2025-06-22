@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An analysis of user music listening data. View statistics like most played songs, artists, genres, and more for different users.">
+    <title>Music Data Project</title>
+</head>
+<body>
+    <header>
+        <h1>Music Listening Analysis</h1>
+    </header>
+
+    <main>
+        <section>
+            <label for="user-select">Choose a user:</label>
+            <select name="users" id="user-select">
+                <option value="">--Please choose a user--</option>
+            </select>
+        </section>
+
+        <hr>
+
+        <section id="results-container">
+            <!-- Analysis results will be inserted here by JavaScript -->
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
