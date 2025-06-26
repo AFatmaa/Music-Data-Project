@@ -21,6 +21,7 @@ const resultContainer = document.getElementById('results-container');
 async function displayStatsForUser(userID) {
   resultContainer.innerHTML = '<h2>Loading data...</h2>';
 
+  // Wait for the asynchronous data fetching and processing to complete.
   const history = await logic.getEnrichedHistory(userID);  
 
   resultContainer.innerHTML = ''; // Clear loading message

@@ -9,13 +9,13 @@ describe('findEveryDaySong', () => {
     // User listened on 3 different days. Only 'Song A' was played on all 3 days.
     const mockHistory = [
       // Day 1: 2023-01-01
-      { timestamp: new Date('2023-01-01T10:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-01T11:00:00Z').getTime(), song: { artist: 'Artist B', name: 'Song B' } },
+      { timestamp: new Date('2023-01-01T10:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-01T11:00:00Z').toISOString(), song: { artist: 'Artist B', name: 'Song B' } },
       // Day 2: 2023-01-02
-      { timestamp: new Date('2023-01-02T12:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-02T13:00:00Z').getTime(), song: { artist: 'Artist C', name: 'Song C' } },
+      { timestamp: new Date('2023-01-02T12:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-02T13:00:00Z').toISOString(), song: { artist: 'Artist C', name: 'Song C' } },
       // Day 3: 2023-01-03
-      { timestamp: new Date('2023-01-03T14:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-03T14:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
     ];
 
      // Run the function we are testing with our mock data.
@@ -31,9 +31,9 @@ describe('findEveryDaySong', () => {
     
     // Similar data, but now 'Song A' is missing from the last day.
     const mockHistory = [
-      { timestamp: new Date('2023-01-01T10:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-02T12:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-03T14:00:00Z').getTime(), song: { artist: 'Artist B', name: 'Song B' } }, // Song A is not here
+      { timestamp: new Date('2023-01-01T10:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-02T12:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-03T14:00:00Z').toISOString(), song: { artist: 'Artist B', name: 'Song B' } }, // Song A is not here
     ];
 
     // Run the function...
@@ -61,10 +61,10 @@ describe('findEveryDaySong', () => {
      
     // User listens on only 2 days, and both Song A and B are played on both days.
      const mockHistory = [
-      { timestamp: new Date('2023-01-01T10:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-01T11:00:00Z').getTime(), song: { artist: 'Artist B', name: 'Song B' } },
-      { timestamp: new Date('2023-01-02T12:00:00Z').getTime(), song: { artist: 'Artist A', name: 'Song A' } },
-      { timestamp: new Date('2023-01-02T13:00:00Z').getTime(), song: { artist: 'Artist B', name: 'Song B' } },
+      { timestamp: new Date('2023-01-01T10:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-01T11:00:00Z').toISOString(), song: { artist: 'Artist B', name: 'Song B' } },
+      { timestamp: new Date('2023-01-02T12:00:00Z').toISOString(), song: { artist: 'Artist A', name: 'Song A' } },
+      { timestamp: new Date('2023-01-02T13:00:00Z').toISOString(), song: { artist: 'Artist B', name: 'Song B' } },
     ];
 
     // Run the function...

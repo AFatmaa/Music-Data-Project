@@ -55,11 +55,14 @@ export async function getEnrichedHistory(userID) {
  * @returns {string | null} The key with the highest total value.
  */
 function findMostCommonBy(history, propertyExtractor, valueExtractor = () => 1) {
+  // Using a Map is efficient for tracking counts. Example: { "Frank Turner" => 1500 }
   const totals = new Map();
 
   for (const item of history) {
-    const key = propertyExtractor(item);
-    const value = valueExtractor(item);
+    // Use the provided callback functions to get the key and value for this specific item.
+    const key = propertyExtractor(item); // e.g., "Frank Turner"
+    const value = valueExtractor(item); // e.g., 1 (for counting) or 227 (for duration)
+    // Get the current total, add the new value, and update the map.
     totals.set(key, (totals.get(key) || 0) + value);
   }
 
@@ -67,7 +70,9 @@ function findMostCommonBy(history, propertyExtractor, valueExtractor = () => 1) 
     return null;
   }
 
+  // We convert the Map to an array of [key, value] pairs to make it sortable/reducible.
   const maxEntry = [...totals.entries()].reduce((a, b) => (b[1] > a[1] ? b : a));
+  // maxEntry is an array like ["Frank Turner", 1500], so we return the first element.
   return maxEntry[0];
 }
 
@@ -157,6 +162,9 @@ export function getTopGenres(history) {
     genreCounts.set(genre, (genreCounts.get(genre) || 0) + 1);
   }
 
+  // Convert the Map into a sortable array and sort it.
   const sortedGenres = [...genreCounts.entries()].sort((a, b) => b[1] - a[1]);
+  
+  // Extract just the names of the top 3 genres.
   return sortedGenres.slice(0, 3).map(entry => entry[0]);
 }
